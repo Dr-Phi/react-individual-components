@@ -88,7 +88,7 @@ form h2 {
   margin-bottom: 10px;
 }
 .form-split-bill input {
-  max-width: 100%;
+  min-width: 100%;
 }
 
 .form-split-bill select {
@@ -185,7 +185,68 @@ form .button {
   grid-column: 2;
 }
 
+@media (min-width: 460px) {
+  body {
+    font-size: 21px;
+  }
+  .form-split-bill {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 600px) {
+  .app {
+    max-width: 30rem;
+    margin: auto;
+  }
+  .form-split-bill {
+    display: flex;
+    flex-direction: column;
+  }
+  .form-split-bill select,
+  .form-split-bill .button {
+    display: inline;
+    min-width: 10rem;
+  }
+}
+
 /* From here on, DESKTOP STYLES */
+
+@media (min-width: 1200px) {
+  .button {
+    font-size: 21px;
+  }
+  .form-add-friend {
+    font-size: 26px;
+  }
+  .app {
+    display: flex;
+    min-width: 100%;
+    gap: 1rem;
+    font-size: 25px;
+  }
+  .sidebar {
+    max-width: 45%;
+  }
+  .principal {
+    position: relative;
+    max-width: 1300px;
+    margin: auto;
+  }
+  .form-split-bill {
+    position: absolute;
+    right: 0;
+    min-width: 50%;
+    font-size: 1.9rem;
+    padding: 2rem;
+  }
+  .form-split-bill select {
+    font-size: 27px;
+  }
+  option {
+    font-size: 16px; /* font size for the options */
+  }
+}
 
 /* .app {
   min-height: 66vh;
