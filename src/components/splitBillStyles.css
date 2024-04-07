@@ -185,6 +185,30 @@ form .button {
   grid-column: 2;
 }
 
+.container-delete {
+  position: relative;
+}
+
+.btn-delete {
+  position: absolute;
+  background-color: rgb(234, 78, 78);
+  border-radius: 100%;
+  padding: 0px 10px;
+  align-items: center;
+  color: azure;
+  font-weight: 600;
+  transform: translate(-10px, -6px);
+}
+
+.btn-delete:hover {
+  background-color: rgb(171, 63, 63);
+  cursor: pointer;
+}
+
+ul:first-of-type {
+  margin-top: 1rem;
+}
+
 @media (min-width: 460px) {
   body {
     font-size: 21px;

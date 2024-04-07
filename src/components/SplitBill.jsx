@@ -27,6 +27,9 @@ export default function App() {
     setSelectedFriend((cur) => (cur?.id === friend.id ? null : friend));
     setShowAddFriend(false);
   }
+  function handleDelete(friend) {
+    setFriends((friends) => friends.filter((fr) => fr !== friend));
+  }
   function handleSplitBill(value) {
     setFriends((friends) =>
       friends.map((friend) =>
@@ -50,6 +53,7 @@ export default function App() {
             friends={friends}
             onSelection={handleSelection}
             selectedFriend={selectedFriend}
+            onDelete={handleDelete}
           />
         </div>
         {selectedFriend && (
@@ -64,34 +68,58 @@ export default function App() {
   );
 }
 
-function FriendsList({ friends, onSelection, selectedFriend }) {
+function FriendsList({ friends, onSelection, selectedFriend, onDelete }) {
+  const [isEdit, setIsEdit] = useState(false);
+  console.log(isEdit);
+
   return (
-    <ul>
-      {friends.map((fr) => (
-        <Friend
-          key={fr.id}
-          friend={fr}
-          onSelection={onSelection}
-          selectedFriend={selectedFriend}
-        />
-      ))}
-    </ul>
+    <div>
+      {friends.length > 0 && (
+        <Button onClickBtn={() => setIsEdit(!isEdit)}>
+          {isEdit ? "Exit Edit" : "Edit friend list"}
+        </Button>
+      )}
+
+      <ul>
+        {friends.map((fr) => (
+          <Friend
+            key={fr.id}
+            friend={fr}
+            onSelection={onSelection}
+            selectedFriend={selectedFriend}
+            isEdit={isEdit}
+            onDelete={onDelete}
+          />
+        ))}
+      </ul>
+    </div>
   );
 }
 
-function Friend({ friend, onSelection, selectedFriend }) {
+function Friend({ friend, onSelection, selectedFriend, isEdit, onDelete }) {
   const isSelected = friend.id === selectedFriend?.id;
   return (
     <li className={isSelected ? "selected" : ""}>
-      <img src={friend.image} alt={friend.name} />
-      <h3>{friend.name}</h3>
-      {friend.balance < 0 && (
-        <p className="red">I owe ${Math.abs(friend.balance)}</p>
+      {isEdit ? (
+        <div className="container-delete">
+          <span className="btn-delete" onClick={() => onDelete(friend)}>
+            x
+          </span>
+          <img src={friend.image} alt={friend.name} />
+        </div>
+      ) : (
+        <img src={friend.image} alt={friend.name} />
       )}
-      {friend.balance > 0 && (
-        <p className="green">owes you ${Math.abs(friend.balance)}</p>
-      )}
-      {friend.balance === 0 && <p>and you are even</p>}
+      <div>
+        <h3>{friend.name}</h3>
+        {friend.balance < 0 && (
+          <p className="red">I owe ${Math.abs(friend.balance)}</p>
+        )}
+        {friend.balance > 0 && (
+          <p className="green">owes you ${Math.abs(friend.balance)}</p>
+        )}
+        {friend.balance === 0 && <p>and you are even</p>}
+      </div>
       <Button onClickBtn={() => onSelection(friend)}>
         {isSelected ? "Close" : "Select"}
       </Button>
